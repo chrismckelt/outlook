@@ -4,7 +4,7 @@
 
 void Main()
 {
-	string fname = "C:/dev/py-outlook/outlook-insight-2022-nov.CSV";
+	string fname = @"C:\dev\outlook\outlook-insight-2022-dec.CSV";
 	string contents = File.ReadAllText(fname);
 
 	const string Pattern =
@@ -26,6 +26,7 @@ void Main()
 	Console.WriteLine("---EXTRACTED EMAIL ADDRESSES---");
 	emailMatches
 	.Select(x => x.Value.ToLower())
+	.Where(x => x.ToLower().Contains("dmirs"))
 	.Distinct()
 	.OrderBy(x=>x)
 	.Dump("emails");

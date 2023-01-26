@@ -24,6 +24,7 @@ class Data:
 
 
 # Load English tokenizer, tagger, parser and NER
+# sourcery skip: avoid-builtin-shadow
 nlp = spacy.load("en_core_web_sm")
 nlp.max_length = 3531630
 file_name = 'C:/dev/outlook/outlook-insight-2022-nov.CSV'
@@ -36,7 +37,7 @@ list = []
 print(f'File Size is {os.stat(file_name).st_size / (1024 * 1024)} MB')
 
 with open(file_name, encoding="utf8") as file:
-    for i in range(100000):
+    for _ in range(100000):
         line = next(file).strip()
         lines = lines + line
 
@@ -48,7 +49,7 @@ for token in doc:
     for email in emails:
         if len(email) > 0:
             d = Data("EMAIL", email)
-            if not email in list:
+            if email not in list:
                 list.append(d)
 
 df = pd.DataFrame(["", ""])
@@ -73,3 +74,6 @@ if (file_name.__contains__("dec")):
 df.to_csv(output_file)
 
 emails = pd.read_csv(output_file)
+print(emails.dtypes)
+var = emails.loc[emails['value'].str.contains("dmirs", case=False)]
+print(var)
